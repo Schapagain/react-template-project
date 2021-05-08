@@ -1,5 +1,3 @@
-# How to setup React with Webpack
+# React Template Project
 
-## A minimal React application configured with Webpack
-
-Feel free to use it to follow through my article, or to use it as a starting point to any of your own applications.
+> Warning : this project uses tailwindcss, which removes all browser-specific default styles. Read more here: https://tailwindcss.com/docs/preflight

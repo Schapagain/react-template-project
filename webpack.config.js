@@ -32,8 +32,19 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [require("tailwindcss"), require("autoprefixer")],
+              },
+            },
+          },
+        ],
         include: path.resolve(__dirname, "src"),
-        use: ["style-loader", "css-loader"],
       },
     ],
   },
