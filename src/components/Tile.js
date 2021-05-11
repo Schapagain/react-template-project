@@ -8,7 +8,7 @@ export default function Tile({
   onClick,
 }) {
   const mainClass = classNames(
-    " relative w-1/3 h-32 min-w-32 md:w-1/4 m-2",
+    " relative w-full h-32 m-2",
     "cursor-pointer rounded-lg transition duration-500 ease",
     "hover:text-white hover:bg-gray-700 bg-gray-300",
     "flex flex-col justify-between items-center text-center"

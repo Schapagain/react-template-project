@@ -1,10 +1,10 @@
 import React from "react";
 import { Redirect } from "react-router";
-import { useAuthContext } from "../contexts/AuthContext";
 import { useNotificationContext } from "../contexts/NotificationContext";
 import { useForm } from "../hooks/";
 import { TextBox, Alert, SubmitButton } from "../design-system/form";
 import classNames from "classnames";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function Login() {
   const { isAuthenticated, loginUser } = useAuthContext();

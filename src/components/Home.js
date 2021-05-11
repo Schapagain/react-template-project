@@ -1,6 +1,7 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
-import Tile from "./Block";
+import Tile from "./Tile";
+import Grid from "../design-system/layout/Grid";
 
 export default function Home() {
   const {
@@ -8,7 +9,7 @@ export default function Home() {
   } = useFetch({});
   console.log(collections);
   return (
-    <div className="flex flex-wrap items-center justify-center">
+    <Grid>
       {collections.map((collection) => (
         <Tile
           key={collection.id}
@@ -17,6 +18,6 @@ export default function Home() {
           description="This is a fun collection of images"
         />
       ))}
-    </div>
+    </Grid>
   );
 }

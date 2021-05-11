@@ -123,7 +123,7 @@ export default function Sidebar({ location }) {
   const [isOpen, setOpen] = useState(false);
 
   const classes = classNames(
-    "h-full overflow-hidden fixed left-0 z-30 bg-gray-300",
+    "h-full hidden md:flex overflow-hidden fixed left-0 z-30 bg-gray-300",
     "transition-width duration-400 ease-in-out",
     {
       "w-72": isOpen,
