@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123"
+    },
+    {
+      "id": 2,
+      "username": "mortal",
+      "password": "mortal123"
+    }
+  ],
+  "collections": [
+    {
+      "id": 1,
+      "name": "Birthday Pics",
+      "imageCount": 2,
+      "userId": 1,
+      "images": [1, 2]
+    },
+    {
+      "id": 2,
+      "name": "Vacation in Chile",
+      "imageCount": 3,
+      "userId": 1,
+      "images": [1, 2, 3]
+    },
+    {
+      "id": 3,
+      "name": "Picnic in the Backyard",
+      "imageCount": 4,
+      "userId": 2,
+      "images": [4, 5, 6, 7]
+    }
+  ],
+  "images": [
+    {
+      "id": 1,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Mth%20One/photo-5.jpeg",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Mth%20One/photo-5.jpeg",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Mth%20One/photo-5.jpeg",
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Sandesh's Collection/colorful_sky.jpg",
+      "userId": 2
+    },
+    {
+      "id": 5,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Mth%20One/photo-5.jpeg",
+      "userId": 2
+    },
+    {
+      "id": 6,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Sandesh's Collection/canal_trail.jpg",
+      "userId": 2
+    },
+    {
+      "id": 7,
+      "src": "https://s3-ap-southeast-1.amazonaws.com/npl-test-001/Mth%20One/photo-5.jpeg",
+      "userId": 2
+    }
+  ]
+}
