@@ -1,13 +1,13 @@
 import React from "react";
 import { Redirect } from "react-router";
-import { useNotificationContext } from "../contexts/NotificationContext";
-import { useForm } from "../hooks/";
-import { TextBox, Alert, SubmitButton } from "../design-system/form";
+import { useNotificationContext } from "../../contexts/NotificationContext";
+import { useForm } from "../../hooks/";
+import { TextBox, Alert, SubmitButton } from "../../design-system/form";
 import classNames from "classnames";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { isAuthenticated, loginUser } = useAuthContext();
+  const { isAuthenticated, loginUser, isLoading } = useAuthContext();
   const { notification } = useNotificationContext();
   const [user, setUser] = useForm();
 
@@ -23,14 +23,22 @@ export default function Login() {
     <Redirect to="/home" />
   ) : (
     <form className={classes} onSubmit={handleSubmit}>
-      <TextBox placeholder="username" name="username" onChange={setUser} />
       <TextBox
-        placeholder="password"
+        placeholder="Username"
+        name="username"
+        onChange={setUser}
+        required={true}
+      />
+      <TextBox
+        placeholder="Password"
         type="password"
         name="password"
         onChange={setUser}
+        required={true}
       />
-      <SubmitButton>Log In</SubmitButton>
+      <SubmitButton className="mt-0.5" isLoading={isLoading}>
+        Log In
+      </SubmitButton>
       {notification?.msg && <Alert {...notification} />}
     </form>
   );

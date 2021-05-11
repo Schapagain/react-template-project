@@ -1,12 +1,14 @@
 import React, { createContext, useReducer } from "react";
 import authReducer from "./authReducer";
 import { useNotificationContext } from "./NotificationContext";
-import { LOGIN, LOGOUT } from "./types";
+import { AUTH_LOADING, LOGIN, LOGIN_FAIL, LOGOUT } from "./types";
 import { makeContextHook } from "./utils";
 import { v4 as uuid } from "uuid";
 import { getFromLocalStorage } from "../utils";
+import api from "../utils/api";
 
 const initialState = {
+  isLoading: false,
   isAuthenticated: getFromLocalStorage("token"),
   user: getFromLocalStorage("user"),
   token: getFromLocalStorage("token"),
@@ -25,15 +27,17 @@ const AuthContextProvider = ({ children }) => {
     });
   }
 
-  function loginUser(user) {
-    // [TODO] make an API call here
-    if (user?.username === "admin" && user?.password === "admin123") {
-      dispatch({
-        type: LOGIN,
-        payload: { user: { username: user.username }, token: "testToken123" },
-      });
+  async function loginUser(attemptedUser) {
+    let token, user;
+    dispatch({ type: AUTH_LOADING });
+    try {
+      ({
+        data: { token, user },
+      } = await api.post("/auth", attemptedUser));
+      dispatch({ type: LOGIN, payload: { token, user } });
       clearNotifications();
-    } else {
+    } catch (err) {
+      dispatch({ type: LOGIN_FAIL });
       addNotification({
         id: uuid(),
         msg: "Invalid Credentials",
@@ -43,13 +47,10 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
-  // Since value object below is recreated on every render
-  // you could useMemo on it incase of performance bottlenecks
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: state.isAuthenticated,
-        user: state.user,
+        ...state,
         logoutUser,
         loginUser,
       }}

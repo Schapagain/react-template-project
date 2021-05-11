@@ -34,8 +34,6 @@ const NotificationContextProvider = ({ children }) => {
     });
   }
 
-  // Since value object below is recreated on every render
-  // you could useMemo on it incase of performance bottlenecks
   return (
     <NotificationContext.Provider
       value={{

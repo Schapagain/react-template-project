@@ -2,13 +2,14 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "../Home";
 import Landing from "../Landing";
-import Login from "../Login";
+import Login from "../auth/Login";
 import Navbar from "./Navbar";
 import ProtectedRoute from "./ProtectedRoute";
 import Signup from "../auth/Signup";
 import Sidebar from "./Sidebar";
 import About from "../About";
 import MobileNav from "./MobileNav";
+import CollectionHome from "../../pages/collection/Home";
 
 export default function Navigator() {
   const classes =
@@ -25,6 +26,7 @@ export default function Navigator() {
           <Route path="/signup" component={Signup} />
           <Route path="/about" component={About} />
           <ProtectedRoute path="/home" component={Home} />
+          <ProtectedRoute path="/collection/:id" component={CollectionHome} />
         </Switch>
       </div>
     </div>

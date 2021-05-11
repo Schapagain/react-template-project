@@ -27,7 +27,7 @@ export default function SubmitButton({
   return (
     <button type="submit" className={mainClass}>
       <div>{children}</div>
-      {isLoading && <Loading size="30px" position="absolute" />}
+      {isLoading && <Loading color={color} />}
     </button>
   );
 }
