@@ -4,7 +4,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 export const Brand = () => {
   return (
-    <Link className="font-blod text-3xl" to="/home">
+    <Link className="font-blod text-3xl" to="/">
       Brand
     </Link>
   );
@@ -35,12 +35,18 @@ export const LogoutLink = () => {
   );
 };
 
-const NavLinks = () => {
+const NavLinks = ({ isHome }) => {
   return (
     <div className="hidden md:flex">
+      {!isHome && (
+        <NavLink>
+          <Link to="/home">Home</Link>
+        </NavLink>
+      )}
       <NavLink>
         <Link to="/about">About</Link>
       </NavLink>
+
       <NavLink>
         <LogoutLink />
       </NavLink>
@@ -48,11 +54,11 @@ const NavLinks = () => {
   );
 };
 
-const NavBar = () => {
+const NavBar = ({ location }) => {
   return (
-    <div className="w-full mt-5 md:mt-0 items-center z-30 max-w-screen-xl flex p-3 justify-between">
+    <div className="flex bg-page fixed top-0 z-30 w-full mt-5 md:mt-0 max-w-screen-xl justify-between items-center p-3">
       <Brand />
-      <NavLinks />
+      <NavLinks isHome={location.pathname === "/home"} />
     </div>
   );
 };

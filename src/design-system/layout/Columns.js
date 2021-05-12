@@ -9,7 +9,7 @@ export default function Columns({ isLoading, children, numColumns, gutter }) {
   });
 
   return (
-    <div className="flex justify-center w-full box-border">
+    <div className="flex justify-center relative w-full">
       {isLoading ? (
         <LoadingDots />
       ) : (
@@ -40,5 +40,5 @@ export default function Columns({ isLoading, children, numColumns, gutter }) {
 
 Columns.defaultProps = {
   numColumns: 3,
-  gutter: 10,
+  gutter: "1vw",
 };
