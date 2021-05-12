@@ -10,16 +10,17 @@ import Sidebar from "./Sidebar";
 import About from "../About";
 import MobileNav from "./MobileNav";
 import CollectionHome from "../../pages/collection/Home";
+import NotFound from "../NotFound";
 
 export default function Navigator() {
   const classes =
-    "flex mx-auto w-full max-w-screen-xl justify-between overflow-hidden flex-col h-full bg-page ";
+    "flex mx-auto w-full max-w-screen-xl justify-between flex-col h-full bg-page ";
   return (
     <div className={classes}>
       <Route path="/" component={Navbar} />
       <Route path="/" component={MobileNav} />
       <Route path="/" component={Sidebar} />
-      <div className="p-20 w-full">
+      <div className="box-content h-full m-10 p-10">
         <Switch>
           <Route path="/" exact component={Landing} />
           <Route path="/login" component={Login} />
@@ -27,6 +28,7 @@ export default function Navigator() {
           <Route path="/about" component={About} />
           <ProtectedRoute path="/home" component={Home} />
           <ProtectedRoute path="/collection/:id" component={CollectionHome} />
+          <Route path="/" component={NotFound} />
         </Switch>
       </div>
     </div>
