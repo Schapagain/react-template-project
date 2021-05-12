@@ -21,9 +21,9 @@ export default function Home() {
       {collections.map((collection) => (
         <Tile
           key={collection.id}
-          title={`Collection #${collection.id}`}
+          title={`${collection.name}`}
           hoverDescription={`${collection.imageCount} images inside`}
-          description="This is a fun collection of images"
+          description="A short description of the album"
           onClick={() => handleCollectionClick(collection.id)}
         />
       ))}
