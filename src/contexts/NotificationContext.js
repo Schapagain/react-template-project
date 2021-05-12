@@ -8,6 +8,7 @@ const initialState = {
   msg: "", // text to display to the user
   type: "", // success, warning, or failure - used as a prop to Alert
   action: "", // login, register or other strings clarifying context of the message
+  field: "", // useful in notifications regarding forms - error in specefic form field, for instance
 };
 
 export const NotificationContext = createContext(initialState);
@@ -34,12 +35,20 @@ const NotificationContextProvider = ({ children }) => {
     });
   }
 
+  // [TODO] This is currently not doing anything, but can be useful
+  // if we want to keep track of multiple notifications
+  // in which case notification state should be a collection-like structure
+  function removeNotification(id) {
+    console.log("NOT IMPLEMENTED YET");
+  }
+
   return (
     <NotificationContext.Provider
       value={{
         notification: state,
         addNotification,
         clearNotifications,
+        removeNotification,
       }}
     >
       {children}
