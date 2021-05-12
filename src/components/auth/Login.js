@@ -5,6 +5,7 @@ import { useForm } from "../../hooks/";
 import { TextBox, Alert, SubmitButton } from "../../design-system/form";
 import classNames from "classnames";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const { isAuthenticated, loginUser, isLoading } = useAuthContext();
@@ -39,7 +40,10 @@ export default function Login() {
       <SubmitButton className="mt-0.5" isLoading={isLoading}>
         Log In
       </SubmitButton>
-      {notification?.msg && <Alert {...notification} />}
+      {notification?.action === "login" && <Alert {...notification} />}
+      <Link to="/signup" className="text-xs underline">
+        Signup instead?
+      </Link>
     </form>
   );
 }

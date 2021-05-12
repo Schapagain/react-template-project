@@ -1,5 +1,12 @@
 import { saveToLocalStorage } from "../utils";
-import { LOGOUT, LOGIN, LOGIN_FAIL, AUTH_LOADING, SIGNUP_FAIL } from "./types";
+import {
+  LOGOUT,
+  LOGIN,
+  LOGIN_FAIL,
+  AUTH_LOADING,
+  SIGNUP_FAIL,
+  SIGNUP,
+} from "./types";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -18,6 +25,12 @@ const authReducer = (state, action) => {
         user,
         isLoading: false,
         token,
+      };
+
+    case SIGNUP:
+      return {
+        ...state,
+        isLoading: false,
       };
 
     case LOGIN_FAIL:

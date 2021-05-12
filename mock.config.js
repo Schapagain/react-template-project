@@ -1,12 +1,13 @@
 import data from "./db.json";
 import MockAdapter from "axios-mock-adapter";
+import { v4 as uuid } from "uuid";
 
 export const initializeAxiosMockAdapter = (instance) => {
   const mock = new MockAdapter(instance, { delayResponse: 200 });
   mock.onGet("/collections").reply(({ headers }) => getCollections(headers));
   mock.onGet(/\/collection\/\d+/).reply((config) => getCollection(config));
-
   mock.onPost("/auth").reply(({ data }) => authenticate(data));
+  mock.onPost("/signup").reply(({ data }) => register(data));
 };
 export const getCollections = (headers) => {
   const token = getTokenFromHeaders(headers);
@@ -50,7 +51,48 @@ const authenticate = (user) => {
         },
       },
     ];
-  } else throw new Error("Invalid Credentials!");
+  } else return [400, { error: "Not Authorized" }];
+};
+
+const register = (user) => {
+  const { username, password } = JSON.parse(user || "{}");
+  if (!username || username.length < 4)
+    return [
+      400,
+      {
+        error: "Username too short",
+        field: "username",
+      },
+    ];
+  if (usernameExists(username)) {
+    return [
+      401,
+      {
+        error: "Username already exists",
+        field: "username",
+      },
+    ];
+  }
+  if (!password || password.length < 5)
+    return [
+      400,
+      {
+        error: "Password too short",
+        field: "password",
+      },
+    ];
+
+  return [
+    201,
+    {
+      id: uuid(),
+      username,
+    },
+  ];
+};
+
+const usernameExists = (username) => {
+  return !!data.users.find((u) => u.username === username);
 };
 
 const getUserIdFromToken = (token) => token?.split("-").pop();

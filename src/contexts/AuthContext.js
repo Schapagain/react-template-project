@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import authReducer from "./authReducer";
 import { useNotificationContext } from "./NotificationContext";
-import { AUTH_LOADING, LOGIN, LOGIN_FAIL, LOGOUT } from "./types";
+import { AUTH_LOADING, LOGIN, LOGIN_FAIL, LOGOUT, SIGNUP } from "./types";
 import { makeContextHook } from "./utils";
 import { v4 as uuid } from "uuid";
 import { getFromLocalStorage } from "../utils";
@@ -47,12 +47,36 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
+  async function signupUser(newUser) {
+    dispatch({ type: AUTH_LOADING });
+    try {
+      await api.post("/signup", newUser);
+      addNotification({
+        id: uuid(),
+        msg: "Signup successfull! You may now log in. Redirecting...",
+        type: "success",
+        action: "signup",
+      });
+      dispatch({ type: SIGNUP });
+    } catch (err) {
+      dispatch({ type: LOGIN_FAIL });
+      addNotification({
+        id: uuid(),
+        msg: err.response.data?.error || "Something went wrong!",
+        type: "failure",
+        action: "signup",
+        field: err.response.data?.field,
+      });
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
         logoutUser,
         loginUser,
+        signupUser,
       }}
     >
       {children}
