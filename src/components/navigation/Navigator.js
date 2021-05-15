@@ -7,10 +7,12 @@ import Navbar from "./Navbar";
 import ProtectedRoute from "./ProtectedRoute";
 import Signup from "../auth/Signup";
 import Sidebar from "./Sidebar";
-import About from "../About";
+import About from "../../pages/about/Home";
 import MobileNav from "./MobileNav";
-import CollectionHome from "../../pages/collection/Home";
-import NotFound from "../NotFound";
+import AlbumHome from "../../pages/albums/Home";
+import AlbumImages from "../../pages/albums/Images";
+
+import NotFound from "../misc/NotFound";
 
 export default function Navigator() {
   const classes =
@@ -20,14 +22,15 @@ export default function Navigator() {
       <Route path="/" component={Navbar} />
       <Route path="/" component={MobileNav} />
       <Route path="/" component={Sidebar} />
-      <div className="box-content h-full m-10 p-10">
+      <div className="box-content h-full flex m-10 p-10">
         <Switch>
           <Route path="/" exact component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/about" component={About} />
           <ProtectedRoute path="/home" component={Home} />
-          <ProtectedRoute path="/collection/:id" component={CollectionHome} />
+          <ProtectedRoute path="/albums" component={AlbumHome} />
+          <ProtectedRoute path="/album/:id" component={AlbumImages} />
           <Route path="/" component={NotFound} />
         </Switch>
       </div>

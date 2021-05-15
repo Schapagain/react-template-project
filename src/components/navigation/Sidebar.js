@@ -153,13 +153,7 @@ export default function Sidebar({ location }) {
     }
   );
   return (
-    <div
-      onTransitionEnd={() => {
-        console.log("animation ended");
-        setShowLeaf(!isOpen);
-      }}
-      className={classes}
-    >
+    <div onTransitionEnd={() => setShowLeaf(!isOpen)} className={classes}>
       {isOpen && (
         <div
           onClick={() => setOpen(false)}

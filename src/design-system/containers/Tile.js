@@ -16,7 +16,7 @@ export default function Tile({
 
   const hoverInfoClasses = classNames(
     "transition-opacity duration-500 ease transform opacity-0 hover:opacity-100",
-    "absolute inset-0 z-30 "
+    "absolute inset-0 z-20 "
   );
   return (
     <div onClick={onClick} className={mainClass}>
@@ -24,7 +24,7 @@ export default function Tile({
         <h1 className="text-sm truncate">{title}</h1>
       </div>
       <div className="relative w-full h-5/6">
-        <p className="text-xs text-gray-700 absolute inset-0 z-20">
+        <p className="text-xs text-gray-700 absolute inset-0 z-10">
           {description}
         </p>
         <div className={hoverInfoClasses}>

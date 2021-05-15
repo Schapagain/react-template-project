@@ -4,34 +4,55 @@ import { v4 as uuid } from "uuid";
 
 export const initializeAxiosMockAdapter = (instance) => {
   const mock = new MockAdapter(instance, { delayResponse: 200 });
-  mock.onGet("/collections").reply(({ headers }) => getCollections(headers));
-  mock.onGet(/\/collection\/\d+/).reply((config) => getCollection(config));
+  mock.onGet("/albums").reply(({ headers }) => getAlbums(headers));
+  mock.onGet("/images").reply(({ headers }) => getImages(headers));
+  mock.onGet(/\/album\/\d+/).reply((config) => getAlbum(config));
   mock.onPost("/auth").reply(({ data }) => authenticate(data));
   mock.onPost("/signup").reply(({ data }) => register(data));
+  mock
+    .onPost(/\/album\/\d+\/upload/)
+    .reply((config) => uploadImageToalbum(config));
 };
-export const getCollections = (headers) => {
+export const getAlbums = (headers) => {
   const token = getTokenFromHeaders(headers);
   return [
     200,
-    data?.collections.filter(
-      (collection) => collection.userId == getUserIdFromToken(token)
-    ),
+    data?.albums.filter((album) => album.userId == getUserIdFromToken(token)),
   ];
 };
-export const getCollection = (config) => {
+
+export const getImages = (headers) => {
+  const token = getTokenFromHeaders(headers);
+  return [
+    200,
+    data?.images.filter((image) => image.userId == getUserIdFromToken(token)),
+  ];
+};
+
+const sleep = (value) => new Promise((resolve) => setTimeout(resolve, value));
+
+// this mocks a request which slowly resolves (20% progress every 500ms)
+async function uploadImageToalbum(config) {
+  const total = 1024; // mocked file size
+  for (const progress of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
+    await sleep(1000);
+    if (config.onUploadProgress) {
+      config.onUploadProgress({ loaded: total * progress, total });
+    }
+  }
+  return [200, null];
+}
+
+export const getAlbum = (config) => {
   const id = extractIdPathParamFromUrl(config);
   const token = getTokenFromHeaders(config.headers);
   const userId = getUserIdFromToken(token);
-  const collection = data?.collections.find(
-    (c) => c.id == id && c.userId == userId
-  );
-  const collectionWithImages = collection && {
-    ...collection,
-    images: data.images.filter((image) =>
-      collection.images?.includes(image.id)
-    ),
+  const album = data?.albums.find((c) => c.id == id && c.userId == userId);
+  const albumWithImages = album && {
+    ...album,
+    images: data.images.filter((image) => album.images?.includes(image.id)),
   };
-  return [200, collectionWithImages];
+  return [200, albumWithImages];
 };
 
 const extractIdPathParamFromUrl = (config) => {
