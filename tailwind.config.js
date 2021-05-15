@@ -19,6 +19,7 @@ module.exports = {
       },
       transitionProperty: {
         width: "width",
+        "width-color": "width,color,background-color",
       },
       animation: {
         "loading-dot": "loading-dot 1s infinite",
