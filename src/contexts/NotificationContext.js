@@ -1,15 +1,25 @@
 import React, { createContext, useReducer } from "react";
 import notificationReducer from "./notificationReducer";
-import { ADD_NOTIFICATION, CLEAR_NOTIFICATIONS } from "./types";
+import {
+  ADD_NOTIFICATION,
+  CLEAR_NOTIFICATIONS,
+  EDIT_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+} from "./types";
 import { makeContextHook } from "./utils";
 
-const initialState = {
-  id: "", // unique identifier to micro manage notifications
-  msg: "", // text to display to the user
-  type: "", // success, warning, or failure - used as a prop to Alert
-  action: "", // login, register or other strings clarifying context of the message
-  field: "", // useful in notifications regarding forms - error in specefic form field, for instance
+/*
+notification model:
+{
+  id: String // unique identifier to micro manage notifications
+  msg: String // text to display to the user
+  type: String, // success, warning, or failure - used as a prop to Alert
+  scope: String, // login, register or other strings clarifying context of the message
+  field: String // useful in notifications regarding forms - error in specefic form field, for instance
 };
+*/
+
+const initialState = [];
 
 export const NotificationContext = createContext(initialState);
 
@@ -29,26 +39,41 @@ const NotificationContextProvider = ({ children }) => {
     });
   }
 
-  function clearNotifications() {
+  function updateNotification(updatedNotification) {
+    console.log("modifying notification:", updatedNotification);
     dispatch({
-      type: CLEAR_NOTIFICATIONS,
+      type: EDIT_NOTIFICATION,
+      payload: updatedNotification,
     });
   }
 
-  // [TODO] This is currently not doing anything, but can be useful
-  // if we want to keep track of multiple notifications
-  // in which case notification state should be a collection-like structure
+  /**
+   * Clear all notifications for the given scope
+   * Will clear everything if no scope provided
+   * @param {String} scope
+   */
+  function clearNotifications(scope) {
+    dispatch({
+      type: CLEAR_NOTIFICATIONS,
+      payload: scope,
+    });
+  }
+
   function removeNotification(id) {
-    console.log("NOT IMPLEMENTED YET");
+    dispatch({
+      type: REMOVE_NOTIFICATION,
+      payload: id,
+    });
   }
 
   return (
     <NotificationContext.Provider
       value={{
-        notification: state,
+        notifications: state,
         addNotification,
         clearNotifications,
         removeNotification,
+        updateNotification,
       }}
     >
       {children}
