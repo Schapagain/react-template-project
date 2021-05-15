@@ -38,11 +38,12 @@ const AuthContextProvider = ({ children }) => {
       clearNotifications();
     } catch (err) {
       dispatch({ type: LOGIN_FAIL });
+      clearNotifications("login");
       addNotification({
         id: uuid(),
         msg: "Invalid Credentials",
         type: "failure",
-        action: "login",
+        scope: "login",
       });
     }
   }
@@ -55,7 +56,7 @@ const AuthContextProvider = ({ children }) => {
         id: uuid(),
         msg: "Signup successfull! You may now log in. Redirecting...",
         type: "success",
-        action: "signup",
+        scope: "signup",
       });
       dispatch({ type: SIGNUP });
     } catch (err) {
@@ -64,7 +65,7 @@ const AuthContextProvider = ({ children }) => {
         id: uuid(),
         msg: err.response.data?.error || "Something went wrong!",
         type: "failure",
-        action: "signup",
+        scope: "signup",
         field: err.response.data?.field,
       });
     }
