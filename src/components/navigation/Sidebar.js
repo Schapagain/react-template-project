@@ -123,7 +123,7 @@ export default function Sidebar({ location }) {
   const [isOpen, setOpen] = useState(false);
 
   const classes = classNames(
-    "h-full hidden md:flex overflow-hidden fixed left-0 z-30 bg-gray-300",
+    "h-full hidden md:flex overflow-hidden fixed left-0 z-30 top-0 bg-gray-300",
     "transition-width duration-400 ease-in-out",
     {
       "w-72": isOpen,
@@ -132,7 +132,13 @@ export default function Sidebar({ location }) {
   );
   return (
     <div className={classes}>
-      <div className="h-full w-full flex relative">
+      {isOpen && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed w-full h-full bg-opacity-20 z-30 bg-indigo-400"
+        ></div>
+      )}
+      <div className="h-full w-full flex z-40 relative">
         {isOpen && (
           <ul className="flex flex-col w-full pr-3">
             {navItems.map((navItem, index) => {
