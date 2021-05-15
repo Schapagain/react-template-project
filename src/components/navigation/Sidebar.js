@@ -119,19 +119,47 @@ function Accordion({ displayText, items, currentPage }) {
   );
 }
 
-export default function Sidebar({ location }) {
-  const [isOpen, setOpen] = useState(false);
-
+function Leaf({ onClick, show }) {
   const classes = classNames(
-    "h-full hidden md:flex overflow-hidden fixed left-0 z-30 top-0 bg-gray-300",
-    "transition-width duration-400 ease-in-out",
+    "rounded-r-full pointer-events-auto flex",
+    "z-50 absolute top-1/2 right-0 w-10 h-10",
+    "transform -translate-y-1/2 translate-x-full bg-gray-300",
     {
-      "w-72": isOpen,
-      "w-4": !isOpen,
+      hidden: !show,
     }
   );
   return (
-    <div className={classes}>
+    <div
+      onClick={onClick}
+      role="button"
+      aria-label="toggle sidebar"
+      className={classes}
+    >
+      <FiMoreVertical aria-hidden={true} className="m-auto" />
+    </div>
+  );
+}
+
+export default function Sidebar({ location }) {
+  const [isOpen, setOpen] = useState(false);
+  const [showLeaf, setShowLeaf] = useState(true);
+
+  const classes = classNames(
+    "h-full hidden md:flex fixed oveflow-y-auto left-0 z-30 top-0",
+    "transition-width-color duration-400 ease-in-out",
+    {
+      "w-72 bg-gray-300": isOpen,
+      "w-0 bg-transparent pointer-events-none": !isOpen,
+    }
+  );
+  return (
+    <div
+      onTransitionEnd={() => {
+        console.log("animation ended");
+        setShowLeaf(!isOpen);
+      }}
+      className={classes}
+    >
       {isOpen && (
         <div
           onClick={() => setOpen(false)}
@@ -139,27 +167,22 @@ export default function Sidebar({ location }) {
         ></div>
       )}
       <div className="h-full w-full flex z-40 relative">
-        {isOpen && (
-          <ul className="flex flex-col w-full pr-3">
-            {navItems.map((navItem, index) => {
-              const currentPage = location && location.pathname;
-              const childrenProps = { currentPage, ...navItem, key: index };
-              return navItem.isAccordion ? (
-                <Accordion {...childrenProps} />
-              ) : (
-                <NavItem {...childrenProps} />
-              );
-            })}
-          </ul>
-        )}
-        <span
-          role="button"
-          aria-label="toggle sidebar"
+        <ul className="flex flex-col overflow-hidden w-full">
+          {navItems.map((navItem, index) => {
+            const currentPage = location && location.pathname;
+            const childrenProps = { currentPage, ...navItem, key: index };
+            return navItem.isAccordion ? (
+              <Accordion {...childrenProps} />
+            ) : (
+              <NavItem {...childrenProps} />
+            );
+          })}
+        </ul>
+
+        <Leaf
           onClick={() => setOpen((open) => !open)}
-          className="bg-gray-400 cursor-pointer h-full w-4 flex absolute right-0"
-        >
-          <FiMoreVertical aria-hidden={true} className="m-auto" />
-        </span>
+          show={showLeaf && !isOpen}
+        />
       </div>
     </div>
   );
