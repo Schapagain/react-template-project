@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router";
 import { useNotificationContext } from "../../contexts/NotificationContext";
 import { useForm } from "../../hooks/";
@@ -9,13 +9,19 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
   const { isAuthenticated, loginUser, isLoading } = useAuthContext();
-  const { notification } = useNotificationContext();
+  const { notifications, clearNotifications } = useNotificationContext();
   const [user, setUser] = useForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     loginUser(user);
   };
+
+  useEffect(() => {
+    return () => {
+      clearNotifications("login");
+    };
+  }, []);
 
   const classes = classNames(
     "flex flex-col w-full md:w-1/2 items-center mx-auto justify-center"
@@ -40,7 +46,12 @@ export default function Login() {
       <SubmitButton className="mt-0.5" isLoading={isLoading}>
         Log In
       </SubmitButton>
-      {notification?.action === "login" && <Alert {...notification} />}
+      {notifications.map(
+        (notification) =>
+          notification.scope === "login" && (
+            <Alert key={notification.id} {...notification} />
+          )
+      )}
       <Link to="/signup" className="text-xs underline">
         Signup instead?
       </Link>
