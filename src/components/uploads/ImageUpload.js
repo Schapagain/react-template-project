@@ -148,7 +148,7 @@ export default function ImageUpload({ url, setProgress, onSuccess }) {
         onSuccess(result);
         updateNotification({
           id: notificationId,
-          msg: "Images successfully uploaded",
+          msg: `Image${numFiles > 1 ? "s" : ""} successfully uploaded`,
           type: "success",
           progress: 100,
         });
