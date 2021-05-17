@@ -12,6 +12,7 @@ export const initializeAxiosMockAdapter = (instance) => {
   mock
     .onPost(/\/album\/\d+\/upload/)
     .reply((config) => uploadImageToalbum(config));
+  mock.onPost(/\/images\/upload/).reply((config) => uploadImage(config));
 };
 export const getAlbums = (headers) => {
   const token = getTokenFromHeaders(headers);
@@ -33,6 +34,18 @@ const sleep = (value) => new Promise((resolve) => setTimeout(resolve, value));
 
 // this mocks a request which slowly resolves (20% progress every 500ms)
 async function uploadImageToalbum(config) {
+  const total = 1024; // mocked file size
+  for (const progress of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
+    await sleep(1000);
+    if (config.onUploadProgress) {
+      config.onUploadProgress({ loaded: total * progress, total });
+    }
+  }
+  return [200, null];
+}
+
+// this mocks a request which slowly resolves (20% progress every 500ms)
+async function uploadImage(config) {
   const total = 1024; // mocked file size
   for (const progress of [0, 0.2, 0.4, 0.6, 0.8, 1]) {
     await sleep(1000);
