@@ -1,7 +1,7 @@
 import React from "react";
 import AuthContextProvider from "./contexts/AuthContext";
 import { BrowserRouter } from "react-router-dom";
-import Navigator from "./components/navigation/Navigator";
+import Navigator from "./navigation/Navigator";
 import NotificationContextProvider from "./contexts/NotificationContext";
 
 export default function App() {

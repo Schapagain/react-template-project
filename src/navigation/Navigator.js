@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Home from "../Home";
-import Landing from "../Landing";
-import Login from "../auth/Login";
+import Home from "../pages/home/Home";
+import Landing from "../pages/home/Landing";
+import Login from "../components/auth/Login";
+import Signup from "../components/auth/Signup";
 import Navbar from "./Navbar";
 import ProtectedRoute from "./ProtectedRoute";
-import Signup from "../auth/Signup";
 import Sidebar from "./Sidebar";
-import About from "../../pages/about/Home";
+import About from "../pages/about/Home";
 import MobileNav from "./MobileNav";
-import AlbumHome from "../../pages/albums/Home";
-import AlbumImages from "../../pages/albums/Images";
+import AlbumHome from "../pages/albums/Home";
+import AlbumImages from "../pages/albums/Images";
 
-import NotFound from "../misc/NotFound";
+import NotFound from "../components/misc/NotFound";
 
 export default function Navigator() {
   const classes =

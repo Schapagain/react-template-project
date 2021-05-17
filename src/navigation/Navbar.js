@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../contexts/AuthContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export const Brand = () => {
   return (
     <Link className="font-blod text-3xl" to="/">
-      Brand
+      Lapse
     </Link>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router";
-import GridImage from "../design-system/containers/GridImage";
-import Columns from "../design-system/layout/Columns";
-import useFetch from "../hooks/useFetch";
+import ImageUpload from "../../components/uploads/ImageUpload";
+import GridImage from "../../design-system/containers/GridImage";
+import Columns from "../../design-system/layout/Columns";
+import useFetch from "../../hooks/useFetch";
 
 const Button = ({ children, label, ...rest }) => {
   return (
@@ -31,6 +32,11 @@ export default function Home() {
         <Button label="view all albums" onClick={() => history.push("/albums")}>
           View Albums
         </Button>
+      </div>
+      <div className="relative w-full flex items-center justify-center h-4 mb-5">
+        <div className="right-0 absolute">
+          <ImageUpload url={`/images/upload/`} />
+        </div>
       </div>
       <Columns isLoading={loading}>
         {images?.map((image) => (
