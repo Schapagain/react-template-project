@@ -5,7 +5,7 @@ export default function LoadingDots() {
 
   return (
     <div
-      className={`absolute inset-0 justify-center mx-1 h-fit-content flex appearance-none`}
+      className={`absolute inset-0 w-full h-full justify-center mx-1 flex appearance-none`}
       aria-hidden="true"
     >
       <div className="flex my-auto justify-between w-9">

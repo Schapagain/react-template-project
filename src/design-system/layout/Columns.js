@@ -39,6 +39,6 @@ export default function Columns({ isLoading, children, numColumns, gutter }) {
 }
 
 Columns.defaultProps = {
-  numColumns: 3,
+  numColumns: 2,
   gutter: "1vw",
 };

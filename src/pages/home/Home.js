@@ -4,6 +4,7 @@ import ImageUpload from "../../components/uploads/ImageUpload";
 import GridImage from "../../design-system/containers/GridImage";
 import Columns from "../../design-system/layout/Columns";
 import useFetch from "../../hooks/useFetch";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 const Button = ({ children, label, ...rest }) => {
   return (
@@ -38,9 +39,24 @@ export default function Home() {
           <ImageUpload url={`/images/upload/`} />
         </div>
       </div>
-      <Columns isLoading={loading}>
+      <Columns numColumns={3} isLoading={loading}>
         {images?.map((image) => (
-          <GridImage key={image.id} src={image.src} alt="" />
+          <GridImage key={image.id} {...image}>
+            <div className="flex w-full h-full bg-black bg-opacity-40 text-white">
+              {image.album ? (
+                <div className="m-auto text-xl flex items-center">
+                  <p>In {image.album.name}</p>
+                  <AiOutlineArrowRight
+                    className="hover:bg-gray-500 ml-1 hover:text-black"
+                    role="button"
+                    aria-label={"go to album " + image.album.name}
+                  />
+                </div>
+              ) : (
+                <p className="m-auto text-xl">Not in any Album</p>
+              )}
+            </div>
+          </GridImage>
         ))}
       </Columns>
     </div>

@@ -19,9 +19,9 @@ export default function Images({ match }) {
           </div>
         </div>
       )}
-      <Columns isLoading={loading}>
+      <Columns numColumns={3} isLoading={loading}>
         {album?.images?.map((image) => (
-          <GridImage key={image.id} src={image.src} alt="" />
+          <GridImage key={image.id} {...image} alt="" />
         ))}
       </Columns>
     </div>
