@@ -23,6 +23,7 @@ const useFetch = ({ url, refresh, doFetch = true, makeData }) => {
     async function fetchData() {
       setLoading(true);
       setRequestError(null);
+      console.log("useFetch::", _makeConfig({ url, token }));
       try {
         const result = await api.request(
           _makeConfig({
@@ -30,7 +31,7 @@ const useFetch = ({ url, refresh, doFetch = true, makeData }) => {
             token,
           })
         );
-        console.log("useFetch::", _makeConfig({ url, token }));
+
         console.log("fetch result:::", result);
         if (result.data) {
           const newData = makeData
@@ -61,7 +62,7 @@ function _makeConfig({ url, token }) {
     method: "get",
     url,
     headers: {
-      Authorization: "PREFIX " + token,
+      Authorization: "Bearer " + token,
     },
   };
 }

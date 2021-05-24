@@ -1,5 +1,13 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+
+const env = process.env.NODE_ENV || "development";
+const API_ENDPOINTS = {
+  staging: "http://localhost:5000/api",
+  production: "http://localhost:5000/api",
+  development: "http://localhost:5000/api",
+};
 
 module.exports = {
   entry: "/src/index.js",
@@ -15,7 +23,7 @@ module.exports = {
       ignored: /node_modules/,
       poll: 1000,
     },
-    port: 9000,
+    port: 3000,
     historyApiFallback: true,
   },
   module: {
@@ -50,6 +58,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      API_ENDPOINT: JSON.stringify(API_ENDPOINTS[env]),
+    }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
     }),

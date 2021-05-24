@@ -16,6 +16,7 @@ notification model:
   type: String, // success, warning, or failure - used as a prop to Alert
   scope: String, // login, register or other strings clarifying context of the message
   field: String // useful in notifications regarding forms - error in specefic form field, for instance
+  expiry: Number // milliseconds to expire notification in
 };
 */
 
@@ -37,6 +38,12 @@ const NotificationContextProvider = ({ children }) => {
       type: ADD_NOTIFICATION,
       payload: notification,
     });
+    if (notification.expiry) {
+      setTimeout(
+        () => removeNotification(notification.id),
+        notification.expiry
+      );
+    }
   }
 
   function updateNotification(updatedNotification) {
@@ -45,6 +52,12 @@ const NotificationContextProvider = ({ children }) => {
       type: EDIT_NOTIFICATION,
       payload: updatedNotification,
     });
+    if (updatedNotification.expiry) {
+      setTimeout(
+        () => removeNotification(updatedNotification.id),
+        updatedNotification.expiry
+      );
+    }
   }
 
   /**

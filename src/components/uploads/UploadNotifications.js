@@ -6,11 +6,11 @@ const Notification = ({ progress, msg, id, type }) => {
   const { removeNotification } = useNotificationContext();
 
   useEffect(() => {
-    if (progress == "100") {
-      setTimeout(() => removeNotification(id), 1500);
-    }
     if (type == "failure") {
       setTimeout(() => removeNotification(id), 10000);
+    }
+    if (progress == "100") {
+      setTimeout(() => removeNotification(id), 1500);
     }
   }, [progress, type]);
 
@@ -19,7 +19,7 @@ const Notification = ({ progress, msg, id, type }) => {
   };
 
   return (
-    <div className="relative p-2 rounded-md pb-3 bg-gray-300 animate-fade-in">
+    <div className="relative p-2 rounded-md pb-3 my-2 bg-gray-300 animate-fade-in">
       <p>{msg}</p>
       <div aria-hidden={true} className="absolute w-full bottom-0 left-0 h-1">
         <span
@@ -47,9 +47,9 @@ export default function UploadNotifications() {
     <div className="fixed bottom-2 left-0 w-60 z-40 p-2">
       {notifications.map(
         (notification) =>
-          (notification.scope = "upload" && (
+          notification.scope === "upload" && (
             <Notification {...notification} key={notification.id} />
-          ))
+          )
       )}
     </div>
   );

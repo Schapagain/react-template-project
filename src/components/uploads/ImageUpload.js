@@ -54,7 +54,7 @@ ImageUpload.defaultProps = {
 };
 
 export default function ImageUpload({ url, setProgress, onSuccess }) {
-  const { authState } = useAuthContext();
+  const { token } = useAuthContext();
   const [filesToUpload, setfilesToUpload] = useState([]);
   const [isOpen, setOpen] = useState(false);
 
@@ -107,7 +107,7 @@ export default function ImageUpload({ url, setProgress, onSuccess }) {
     if (filesToUpload) {
       const uploadData = new FormData();
       for (let i = 0; i < filesToUpload.length; i++) {
-        uploadData.append("file", filesToUpload[i]);
+        uploadData.append("image", filesToUpload[i]);
       }
       uploadFiles(uploadData, filesToUpload.length);
       setOpen(false);
@@ -128,19 +128,12 @@ export default function ImageUpload({ url, setProgress, onSuccess }) {
     callAPI({
       url,
       data: uploadData,
-      token: authState?.token,
+      token,
       contentType: "form",
       onUploadProgress: (progress) => {
         updateNotification({
           id: notificationId,
-          progress,
-        });
-        setProgress(progress);
-      },
-      onDownloadProgress: (progress) => {
-        updateNotification({
-          id: notificationId,
-          progress,
+          progress: (progress * 60) / 100,
         });
         setProgress(progress);
       },
@@ -175,7 +168,7 @@ export default function ImageUpload({ url, setProgress, onSuccess }) {
       />
       {isOpen && (
         <div className="w-full h-full inset-0 flex fixed z-30 p-10 bg-black bg-opacity-30">
-          <div className="flex flex-col bg-gray-300 m-auto rounded-lg p-10 min-h-52 h-3/5 max-w-xl w-4/5">
+          <div className="flex flex-col bg-page m-auto rounded-lg p-10 min-h-52 h-3/5 max-w-xl w-4/5">
             <div className="mb-4" {...getRootProps({ style })}>
               <input {...getInputProps()} />
               <p>Drag 'n' drop some files here, or click to select files</p>
@@ -187,23 +180,18 @@ export default function ImageUpload({ url, setProgress, onSuccess }) {
             </div>
             <div className="h-1/12 flex">
               {filesToUpload.length > 0 && (
-                <Button
-                  size="md"
-                  className=" mr-2 rounded-lg"
-                  color="blue-500"
-                  onClick={handleUpload}
-                  text="Upload"
-                  variant="default"
-                  icon={<AiOutlineCloudUpload />}
-                />
+                <Button className=" mr-2 rounded-lg" onClick={handleUpload}>
+                  Upload
+                </Button>
               )}
               <Button
-                text="Close"
                 className="rounded-lg"
                 onClick={() => setOpen(false)}
-                variant="default"
+                variant="danger"
                 color="red-500"
-              />
+              >
+                Close
+              </Button>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function Tile({
   onClick,
 }) {
   const mainClass = classNames(
-    " relative w-full h-32 m-2",
+    " relative w-full h-40 m-2",
     "cursor-pointer rounded-lg transition duration-500 ease",
     "hover:text-white hover:bg-gray-700 bg-gray-300",
     "flex flex-col justify-between items-center text-center"
@@ -24,7 +24,7 @@ export default function Tile({
         <h1 className="text-sm truncate">{title}</h1>
       </div>
       <div className="relative w-full h-5/6">
-        <p className="text-xs text-gray-700 absolute inset-0 z-10">
+        <p className="text-xs overflow-hidden p-2 text-gray-700 absolute inset-0 z-10">
           {description}
         </p>
         <div className={hoverInfoClasses}>

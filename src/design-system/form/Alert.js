@@ -23,6 +23,7 @@ export default function Alert({ className, msg, type = "success", onClick }) {
       "bg-yellow-400": type === "warning",
     }
   );
+  console.log("got alert", msg);
   return (
     <p onClick={onClick} className={classes}>
       {type === "success" ? (

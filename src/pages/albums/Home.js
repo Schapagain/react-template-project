@@ -24,7 +24,7 @@ export default function Home() {
           key={album.id}
           title={`${album.name}`}
           hoverDescription={`${album.imageCount} images inside`}
-          description="A short description of the album"
+          description={album.story}
           onClick={() => handleAlbumClick(album.id)}
         />
       ))}

@@ -1,8 +1,7 @@
 import Axios from "axios";
-import { initializeAxiosMockAdapter } from "../../mock.config";
-initializeAxiosMockAdapter(Axios);
 
 const api = Axios.create({
+  baseURL: API_ENDPOINT,
   timeout: 2500,
   headers: { Accept: "application/json" },
 });
@@ -32,25 +31,22 @@ export async function callAPI({
   onError = () => null,
 }) {
   console.log(method || "post", "ing to", url, data);
-  if (data.entries) {
+  if (data && data.entries) {
     for (var key of data.entries()) {
       console.log(key[0] + " : " + key[1]);
     }
   }
 
   const request = Axios.create({
-    baseURL: "",
+    baseURL: API_ENDPOINT,
     headers: {
-      Authorization: `NPL ${token}`,
-      "Content-Type":
+      Authorization: `Bearer ${token}`,
+      "content-type":
         contentType === "json"
           ? "application/json"
-          : contentType === "form"
-          ? "multipart/x-www-form-urlencoded"
-          : null,
+          : "multipart/x-www-form-urlencoded",
     },
   });
-
   try {
     const result = await request.request({
       method: method || "post",
@@ -69,9 +65,11 @@ export async function callAPI({
         onDownloadProgress(progress);
       },
     });
+    console.log("call api result:", result);
     onSuccess(result);
     return result;
   } catch (err) {
     onError(err);
+    console.log(err.response);
   }
 }
