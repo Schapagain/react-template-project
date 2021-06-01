@@ -12,6 +12,7 @@ const API_ENDPOINTS = {
 module.exports = {
   entry: "/src/index.js",
   output: {
+    publicPath: "/",
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {
